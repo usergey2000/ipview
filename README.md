@@ -21,14 +21,21 @@ pip install -r requirements.txt
 python -m ipview
 
 # Specify input pattern and output file
-python -m ipview -i "firewall*.log" -o map.png
+python -m ipview -i "logdir/*" -o map.png
+
+# Generate an interactive HTML map with zoom/pan (uses file modification time as timestamp)
+python -m ipview -i "logdir/*" --html -o map.html
 
 # Generate a density heatmap
-python -m ipview --heatmap -o heatmap.png
+python -m ipview -i "logdir/*" --heatmap -o heatmap.png
 
 # Verbose mode
-python -m ipview -v
+python -m ipview -i "logdir/*" -v
 ```
+
+## Timestamps
+
+When analyzing log directories, timestamps are extracted from the file modification time of each log file, allowing you to track when IPs were first seen over time.
 
 ## GeoIP Database
 

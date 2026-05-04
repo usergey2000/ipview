@@ -53,21 +53,21 @@ def main(args: List[str] = None) -> int:
 
     ip_timestamps = None
 
-    # Check if input looks like a directory pattern for timestamp extraction
-    if 'logdir' in parsed.input:
-        ip_timestamps = collect_dropped_ips_with_timestamp(parsed.input)
-        ips = set(ip_timestamps.keys())
-        if parsed.verbose:
-            print(f"Found {len(ips)} unique IP(s) with DROP entries")
-            print("Timestamps extracted from filenames:")
-            for ip, ts in sorted(ip_timestamps.items())[:5]:
-                print(f"  {ip}: {ts}")
-            if len(ip_timestamps) > 5:
-                print(f"  ... and {len(ip_timestamps) - 5} more")
-    else:
-        ips = collect_dropped_ips(parsed.input)
-        if parsed.verbose:
-            print(f"Found {len(ips)} unique IP(s) with DROP entries")
+    # Collect IPs and get timestamps from file modification time
+    ip_timestamps = collect_dropped_ips_with_timestamp(parsed.input)
+    ips = set(ip_timestamps.keys())
+
+    if not ips:
+        print("No IPs with DROP entries found.", file=sys.stderr)
+        return 1
+
+    if parsed.verbose:
+        print(f"Found {len(ips)} unique IP(s) with DROP entries")
+        print("Timestamps from file modification times:")
+        for ip, ts in sorted(ip_timestamps.items())[:5]:
+            print(f"  {ip}: {ts}")
+        if len(ip_timestamps) > 5:
+            print(f"  ... and {len(ip_timestamps) - 5} more")
 
     # Geolocate IPs
     if parsed.verbose:
