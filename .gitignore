@@ -1,0 +1,35 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyc
+*.so
+*.egg-info/
+.eggs/
+build/
+dist/
+*.spec.bak
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Output files
+*.png
+*.jpg
+*.jpeg
+*.html
+*.pdf
+
+# Environment
+.env
+.venv/
+venv/
+env/
+venv.bak/
+
+# Cache
+.cache/
+.pytest_cache/
+.coverage

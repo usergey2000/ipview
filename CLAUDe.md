@@ -1,0 +1,2 @@
+Wite a packacge in python which 1) collects IP adressed in lines ending with DROP in *.log files,
+2) finds the geo location of thes ips, 3) creates a world map image with point coreesponding to these IPS

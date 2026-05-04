@@ -1,0 +1,139 @@
+# Firewall configuration written by system-config-securitylevel
+# Manual customization of this file is not recommended.
+*nat
+:PREROUTING ACCEPT [284797:12896604]
+:INPUT ACCEPT [1512:911230]
+:OUTPUT ACCEPT [652:69875]
+:POSTROUTING ACCEPT [181:33417]
+-A POSTROUTING -o ens4f0np0 -j MASQUERADE
+COMMIT
+*filter
+:INPUT ACCEPT [0:0]
+:FORWARD ACCEPT [0:0]
+:OUTPUT ACCEPT [0:0]
+:RH-Firewall-1-INPUT - [0:0]
+-A INPUT -j RH-Firewall-1-INPUT
+#For use with bridges
+#ens8 - public, and ens3 - private
+#ens4f0np0 - public, bond0 - private
+-A FORWARD -i ens4f0np0 -o bond0  -m state --state RELATED,ESTABLISHED -j ACCEPT
+-A FORWARD -i bond0 -o ens4f0np0  -j ACCEPT
+#
+-A FORWARD -j RH-Firewall-1-INPUT
+-A RH-Firewall-1-INPUT -m state --state RELATED,ESTABLISHED -j ACCEPT
+-A RH-Firewall-1-INPUT -i lo   -j ACCEPT
+-A RH-Firewall-1-INPUT -p icmp -j ACCEPT
+#
+# Allow all connections from "friendly" local networks
+#172.23.0.0/16 - cluster admin, 10.148.0.0/16 - cluster ib, 10.0.33.0/24 - ITS public, 131.156.170.0/24 - NIU Metis public
+-A RH-Firewall-1-INPUT -s  131.156.170.0/24       -j ACCEPT
+-A RH-Firewall-1-INPUT -s  172.23.0.0/16          -j ACCEPT
+-A RH-Firewall-1-INPUT -s  10.0.33.0/24           -j ACCEPT
+-A RH-Firewall-1-INPUT -s  10.148.0.0/16          -j ACCEPT
+#Physics network
+-A RH-Firewall-1-INPUT -s  131.156.85.0/24        -j ACCEPT
+#======================================
+#Drop wanna-be intruders (do not edit)
+#Added on Jan31_192501 
+-A RH-Firewall-1-INPUT -s  101.126.70.9   -j DROP 
+-A RH-Firewall-1-INPUT -s  101.227.53.119   -j DROP 
+-A RH-Firewall-1-INPUT -s  101.32.141.19   -j DROP 
+-A RH-Firewall-1-INPUT -s  101.89.157.34   -j DROP 
+-A RH-Firewall-1-INPUT -s  103.195.4.121   -j DROP 
+-A RH-Firewall-1-INPUT -s  103.231.40.36   -j DROP 
+-A RH-Firewall-1-INPUT -s  103.237.144.204   -j DROP 
+-A RH-Firewall-1-INPUT -s  104.250.50.140   -j DROP 
+-A RH-Firewall-1-INPUT -s  106.55.197.62   -j DROP 
+-A RH-Firewall-1-INPUT -s  1.117.182.101   -j DROP 
+-A RH-Firewall-1-INPUT -s  112.217.207.26   -j DROP 
+-A RH-Firewall-1-INPUT -s  118.195.182.56   -j DROP 
+-A RH-Firewall-1-INPUT -s  121.136.155.165   -j DROP 
+-A RH-Firewall-1-INPUT -s  122.254.94.129   -j DROP 
+-A RH-Firewall-1-INPUT -s  124.222.187.59   -j DROP 
+-A RH-Firewall-1-INPUT -s  124.222.74.204   -j DROP 
+-A RH-Firewall-1-INPUT -s  124.223.219.167   -j DROP 
+-A RH-Firewall-1-INPUT -s  125.164.5.108   -j DROP 
+-A RH-Firewall-1-INPUT -s  125.67.125.170   -j DROP 
+-A RH-Firewall-1-INPUT -s  131.153.22.240   -j DROP 
+-A RH-Firewall-1-INPUT -s  139.59.25.164   -j DROP 
+-A RH-Firewall-1-INPUT -s  140.86.39.162   -j DROP 
+-A RH-Firewall-1-INPUT -s  14.29.180.161   -j DROP 
+-A RH-Firewall-1-INPUT -s  143.244.144.227   -j DROP 
+-A RH-Firewall-1-INPUT -s  144.34.171.163   -j DROP 
+-A RH-Firewall-1-INPUT -s  147.182.247.10   -j DROP 
+-A RH-Firewall-1-INPUT -s  148.251.102.94   -j DROP 
+-A RH-Firewall-1-INPUT -s  152.228.164.249   -j DROP 
+-A RH-Firewall-1-INPUT -s  154.26.192.39   -j DROP 
+-A RH-Firewall-1-INPUT -s  159.203.23.80   -j DROP 
+-A RH-Firewall-1-INPUT -s  159.65.91.105   -j DROP 
+-A RH-Firewall-1-INPUT -s  164.92.106.15   -j DROP 
+-A RH-Firewall-1-INPUT -s  165.154.42.45   -j DROP 
+-A RH-Firewall-1-INPUT -s  165.227.172.206   -j DROP 
+-A RH-Firewall-1-INPUT -s  167.71.56.110   -j DROP 
+-A RH-Firewall-1-INPUT -s  170.64.183.168   -j DROP 
+-A RH-Firewall-1-INPUT -s  175.206.113.91   -j DROP 
+-A RH-Firewall-1-INPUT -s  175.27.239.13   -j DROP 
+-A RH-Firewall-1-INPUT -s  183.56.226.5   -j DROP 
+-A RH-Firewall-1-INPUT -s  186.96.139.154   -j DROP 
+-A RH-Firewall-1-INPUT -s  189.222.152.51   -j DROP 
+-A RH-Firewall-1-INPUT -s  189.222.198.178   -j DROP 
+-A RH-Firewall-1-INPUT -s  190.145.17.26   -j DROP 
+-A RH-Firewall-1-INPUT -s  190.147.213.31   -j DROP 
+-A RH-Firewall-1-INPUT -s  195.133.146.254   -j DROP 
+-A RH-Firewall-1-INPUT -s  200.148.153.172   -j DROP 
+-A RH-Firewall-1-INPUT -s  202.83.16.8   -j DROP 
+-A RH-Firewall-1-INPUT -s  212.90.120.167   -j DROP 
+-A RH-Firewall-1-INPUT -s  218.92.0.53   -j DROP 
+-A RH-Firewall-1-INPUT -s  218.92.0.55   -j DROP 
+-A RH-Firewall-1-INPUT -s  221.226.2.122   -j DROP 
+-A RH-Firewall-1-INPUT -s  222.87.218.26   -j DROP 
+-A RH-Firewall-1-INPUT -s  34.92.81.41   -j DROP 
+-A RH-Firewall-1-INPUT -s  35.237.94.18   -j DROP 
+-A RH-Firewall-1-INPUT -s  36.133.34.191   -j DROP 
+-A RH-Firewall-1-INPUT -s  36.46.159.244   -j DROP 
+-A RH-Firewall-1-INPUT -s  36.84.99.87   -j DROP 
+-A RH-Firewall-1-INPUT -s  39.109.116.167   -j DROP 
+-A RH-Firewall-1-INPUT -s  43.130.26.150   -j DROP 
+-A RH-Firewall-1-INPUT -s  43.130.42.91   -j DROP 
+-A RH-Firewall-1-INPUT -s  43.134.181.196   -j DROP 
+-A RH-Firewall-1-INPUT -s  43.134.227.87   -j DROP 
+-A RH-Firewall-1-INPUT -s  43.139.247.180   -j DROP 
+-A RH-Firewall-1-INPUT -s  43.153.56.90   -j DROP 
+-A RH-Firewall-1-INPUT -s  43.156.0.112   -j DROP 
+-A RH-Firewall-1-INPUT -s  45.117.64.242   -j DROP 
+-A RH-Firewall-1-INPUT -s  45.33.6.210   -j DROP 
+-A RH-Firewall-1-INPUT -s  49.235.237.222   -j DROP 
+-A RH-Firewall-1-INPUT -s  58.210.46.186   -j DROP 
+-A RH-Firewall-1-INPUT -s  64.225.54.60   -j DROP 
+-A RH-Firewall-1-INPUT -s  68.178.174.221   -j DROP 
+-A RH-Firewall-1-INPUT -s  69.49.247.238   -j DROP 
+-A RH-Firewall-1-INPUT -s  79.137.198.143   -j DROP 
+-A RH-Firewall-1-INPUT -s  79.175.128.161   -j DROP 
+-A RH-Firewall-1-INPUT -s  81.231.96.145   -j DROP 
+-A RH-Firewall-1-INPUT -s  83.111.121.102   -j DROP 
+-A RH-Firewall-1-INPUT -s  84.2.226.70   -j DROP 
+-A RH-Firewall-1-INPUT -s  85.172.189.189   -j DROP 
+-A RH-Firewall-1-INPUT -s  89.252.140.21   -j DROP 
+-A RH-Firewall-1-INPUT -s  92.247.69.54   -j DROP 
+-A RH-Firewall-1-INPUT -s  94.50.19.234   -j DROP 
+#=======================================
+#Set default-acesss-rules below
+#=======================================
+#
+-A RH-Firewall-1-INPUT -m state --state NEW  -p tcp -m tcp --dport 22    -j ACCEPT
+-A RH-Firewall-1-INPUT -m state --state NEW  -p tcp -m tcp --dport 80    -j ACCEPT
+-A RH-Firewall-1-INPUT -m state --state NEW  -p tcp -m tcp --dport 443   -j ACCEPT
+#
+#-A RH-Firewall-1-INPUT --source 131.156.85.0/24 -m state --state NEW -m tcp -p tcp --dport 22  -m comment --comment "sshd"   -j ACCEPT
+#-A RH-Firewall-1-INPUT --source 10.0.0.0/8      -m state --state NEW -m tcp -p tcp --dport 22  -m comment --comment "sshd"   -j ACCEPT
+#
+-A RH-Firewall-1-INPUT -m state --state NEW -m tcp -p tcp --dport 389 --source 131.156.85.0/24  -m comment --comment "ldap"   -j ACCEPT
+-A RH-Firewall-1-INPUT -m state --state NEW -m tcp -p tcp --dport 636 --source 131.156.85.0/24 -m comment --comment "ldaps"  -j ACCEPT
+#
+#-A RH-Firewall-1-INPUT -p udp -m udp --dport 8649 --source 131.156.85.0/24   -m comment --comment "ganglia gmond, udp" -j ACCEPT
+#-A RH-Firewall-1-INPUT -p tcp -m tcp --dport 8649 --source 10.0.0.0/8        -m comment --comment "ganglia gmond, tcp" -j ACCEPT
+#-A RH-Firewall-1-INPUT -p udp -m udp --dport 8651 --source 131.156.85.0/24   -m comment --comment "ganglia gmetad, udp" -j ACCEPT
+#-A RH-Firewall-1-INPUT -p tcp -m tcp --dport 8651 --source 10.0.0.0/8        -m comment --comment "ganglia gmetad, tcp" -j ACCEPT
+#
+-A RH-Firewall-1-INPUT -j REJECT --reject-with icmp-host-prohibited
+COMMIT

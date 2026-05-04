@@ -1,0 +1,22 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ipview"
+version = "0.1.0"
+description = "Analyze firewall logs and visualize blocked IPs on a world map"
+readme = "CLAUDE.md"
+requires-python = ">=3.8"
+dependencies = [
+    "geoip2>=4.0.0",
+    "matplotlib>=3.5.0",
+    "numpy>=1.23.0",
+]
+
+[project.scripts]
+ipview = "ipview.main:main"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["ipview*"]
