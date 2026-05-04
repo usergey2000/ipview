@@ -5,7 +5,7 @@ import argparse
 import sys
 from typing import List
 
-from .collector import collect_dropped_ips, collect_dropped_ips_with_stats, filter_timestamps_by_date
+from .collector import collect_dropped_ips, collect_dropped_ips_with_stats, filter_timestamps_by_date, filter_by_frequency
 from .geo import get_geo_locations, GeoIPLookup
 from .map import create_world_map, create_heatmap, create_interactive_map
 
@@ -52,6 +52,12 @@ def main(args: List[str] = None) -> int:
         '--end-date',
         help='End date in MM-DD-YYYY format (inclusive)'
     )
+    parser.add_argument(
+        '--min-freq',
+        type=int,
+        default=100,
+        help='Minimum IP appearance frequency to include (default: 100)'
+    )
 
     parsed = parser.parse_args(args)
 
@@ -74,7 +80,17 @@ def main(args: List[str] = None) -> int:
     if ip_frequencies:
         ip_frequencies = {ip: count for ip, count in ip_frequencies.items() if ip in ip_timestamps}
 
-    ips = set(ip_timestamps.keys())
+    # Filter by minimum frequency threshold
+    if ip_frequencies and parsed.min_freq > 1:
+        ip_frequencies = filter_by_frequency(ip_frequencies, min_count=parsed.min_freq)
+        ip_timestamps = {ip: ts for ip, ts in ip_timestamps.items() if ip in ip_frequencies}
+        ips = set(ip_timestamps.keys())
+        if parsed.verbose:
+            print(f"Filtered to {len(ips)} IPs with frequency >= {parsed.min_freq}")
+
+    if not ips:
+        print("No IPs with DROP entries found.", file=sys.stderr)
+        return 1
 
     if not ips:
         print("No IPs with DROP entries found.", file=sys.stderr)
