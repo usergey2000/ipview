@@ -5,7 +5,7 @@ import argparse
 import sys
 from typing import List
 
-from .collector import collect_dropped_ips
+from .collector import collect_dropped_ips, collect_dropped_ips_with_timestamp
 from .geo import get_geo_locations, GeoIPLookup
 from .map import create_world_map, create_heatmap, create_interactive_map
 
@@ -51,14 +51,23 @@ def main(args: List[str] = None) -> int:
     if parsed.verbose:
         print(f"Scanning for log files matching: {parsed.input}")
 
-    ips = collect_dropped_ips(parsed.input)
+    ip_timestamps = None
 
-    if not ips:
-        print("No IPs with DROP entries found.", file=sys.stderr)
-        return 1
-
-    if parsed.verbose:
-        print(f"Found {len(ips)} unique IP(s) with DROP entries")
+    # Check if input looks like a directory pattern for timestamp extraction
+    if 'logdir' in parsed.input:
+        ip_timestamps = collect_dropped_ips_with_timestamp(parsed.input)
+        ips = set(ip_timestamps.keys())
+        if parsed.verbose:
+            print(f"Found {len(ips)} unique IP(s) with DROP entries")
+            print("Timestamps extracted from filenames:")
+            for ip, ts in sorted(ip_timestamps.items())[:5]:
+                print(f"  {ip}: {ts}")
+            if len(ip_timestamps) > 5:
+                print(f"  ... and {len(ip_timestamps) - 5} more")
+    else:
+        ips = collect_dropped_ips(parsed.input)
+        if parsed.verbose:
+            print(f"Found {len(ips)} unique IP(s) with DROP entries")
 
     # Geolocate IPs
     if parsed.verbose:
@@ -70,23 +79,34 @@ def main(args: List[str] = None) -> int:
     finally:
         geo.close()
 
-    if not locations:
+    # Filter out IPs that couldn't be geolocated (None lat/lon)
+    valid_locations = {ip: loc for ip, loc in locations.items() if loc.get('lat') is not None}
+
+    if not valid_locations:
         print("No geographic locations found for any IPs.", file=sys.stderr)
         return 1
 
     if parsed.verbose:
-        print(f"Geolocated {len(locations)} IP(s)")
-        for ip, loc in locations.items():
-            print(f"  {ip}: {loc['country']}, {loc['city']} ({loc['lat']:.4f}, {loc['lon']:.4f})")
+        if len(valid_locations) < len(locations):
+            print(f"Filtered {len(locations) - len(valid_locations)} IP(s) without valid location")
+
+    if parsed.verbose:
+        print(f"Geolocated {len(valid_locations)} IP(s)")
+        for ip, loc in valid_locations.items():
+            city = loc.get('city')
+            city_str = f", {city}" if city else ""
+            lat = loc.get('lat', 0)
+            lon = loc.get('lon', 0)
+            print(f"  {ip}: {loc['country']}{city_str} ({lat:.4f}, {lon:.4f})")
 
     # Generate map
     output_path = parsed.output
     if parsed.heatmap:
-        output_path = create_heatmap(locations, output_path)
+        output_path = create_heatmap(valid_locations, output_path)
     elif parsed.html:
-        output_path = create_interactive_map(locations, output_path)
+        output_path = create_interactive_map(valid_locations, output_path, ip_timestamps=ip_timestamps)
     else:
-        output_path = create_world_map(locations, output_path)
+        output_path = create_world_map(valid_locations, output_path)
 
     print(f"Map saved to: {output_path}")
     return 0

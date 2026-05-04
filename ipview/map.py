@@ -4,6 +4,7 @@ import os
 from typing import Dict
 from collections import defaultdict
 import json
+from datetime import datetime
 
 try:
     import cartopy.crs as ccrs
@@ -131,7 +132,8 @@ def create_heatmap(
 def create_interactive_map(
     ip_locations: Dict[str, Dict[str, float]],
     output_path: str = 'ip_map.html',
-    title: str = 'Blocked IP Locations'
+    title: str = 'Blocked IP Locations',
+    ip_timestamps: Dict[str, datetime] | None = None
 ) -> str:
     """Create an interactive HTML map with zoomable IP locations using Leaflet.js.
 
@@ -139,13 +141,14 @@ def create_interactive_map(
         ip_locations: Dict mapping IPs to location info (lat, lon, country, city)
         output_path: Path to save the HTML output
         title: Map title
+        ip_timestamps: Optional dict mapping IPs to their timestamps
 
     Returns:
         Path to the saved HTML file
     """
     # Separate coordinates and build IP data
-    lats = [loc['lat'] for loc in ip_locations.values()]
-    lons = [loc['lon'] for loc in ip_locations.values()]
+    lats = [loc.get('lat', 0) for loc in ip_locations.values()]
+    lons = [loc.get('lon', 0) for loc in ip_locations.values()]
 
     # Calculate map center (average lat/lon)
     center_lat = sum(lats) / len(lats)
@@ -156,11 +159,18 @@ def create_interactive_map(
     for ip, loc in ip_locations.items():
         country = loc.get('country', 'Unknown')
         city = loc.get('city', 'Unknown')
-        lat = loc['lat']
-        lon = loc['lon']
+        lat = loc.get('lat', 0)
+        lon = loc.get('lon', 0)
+
+        # Include timestamp if available
+        timestamp_info = ""
+        if ip_timestamps and ip in ip_timestamps:
+            ts = ip_timestamps[ip]
+            timestamp_info = f"<br><b>Timestamp:</b> {ts.strftime('%Y-%m-%d %H:%M:%S')}"
+
         marker_html = f"""        L.marker([{lat}, {lon}])
             .addTo(map)
-            .bindPopup("<b>{ip}</b><br>{country}{', ' + city if city else ''}");"""
+            .bindPopup("<b>{ip}</b><br>{country}{', ' + city if city else ''}{timestamp_info}");"""
         markers.append(marker_html)
 
     markers_html = "\n".join(markers)
