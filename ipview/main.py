@@ -5,7 +5,7 @@ import argparse
 import sys
 from typing import List
 
-from .collector import collect_dropped_ips, collect_dropped_ips_with_timestamp
+from .collector import collect_dropped_ips, collect_dropped_ips_with_timestamp, filter_timestamps_by_date
 from .geo import get_geo_locations, GeoIPLookup
 from .map import create_world_map, create_heatmap, create_interactive_map
 
@@ -44,6 +44,14 @@ def main(args: List[str] = None) -> int:
         action='store_true',
         help='Enable verbose output'
     )
+    parser.add_argument(
+        '--start-date',
+        help='Start date in MM-DD-YYYY format (inclusive)'
+    )
+    parser.add_argument(
+        '--end-date',
+        help='End date in MM-DD-YYYY format (inclusive)'
+    )
 
     parsed = parser.parse_args(args)
 
@@ -55,6 +63,13 @@ def main(args: List[str] = None) -> int:
 
     # Collect IPs and get timestamps from file modification time
     ip_timestamps = collect_dropped_ips_with_timestamp(parsed.input)
+
+    # Filter by date range if specified
+    ip_timestamps = filter_timestamps_by_date(
+        ip_timestamps,
+        parsed.start_date,
+        parsed.end_date
+    )
     ips = set(ip_timestamps.keys())
 
     if not ips:
