@@ -133,7 +133,8 @@ def create_interactive_map(
     ip_locations: Dict[str, Dict[str, float]],
     output_path: str = 'ip_map.html',
     title: str = 'Blocked IP Locations',
-    ip_timestamps: Dict[str, datetime] | None = None
+    ip_timestamps: Dict[str, datetime] | None = None,
+    ip_frequencies: Dict[str, int] | None = None
 ) -> str:
     """Create an interactive HTML map with zoomable IP locations using Leaflet.js.
 
@@ -142,6 +143,7 @@ def create_interactive_map(
         output_path: Path to save the HTML output
         title: Map title
         ip_timestamps: Optional dict mapping IPs to their timestamps
+        ip_frequencies: Optional dict mapping IPs to their occurrence counts
 
     Returns:
         Path to the saved HTML file
@@ -168,9 +170,15 @@ def create_interactive_map(
             ts = ip_timestamps[ip]
             timestamp_info = f"<br><b>Timestamp:</b> {ts.strftime('%Y-%m-%d %H:%M:%S')}"
 
+        # Include frequency if available
+        frequency_info = ""
+        if ip_frequencies and ip in ip_frequencies:
+            count = ip_frequencies[ip]
+            frequency_info = f"<br><b>Count:</b> {count} occurrence{'s' if count > 1 else ''}"
+
         marker_html = f"""        L.marker([{lat}, {lon}])
             .addTo(map)
-            .bindPopup("<b>{ip}</b><br>{country}{', ' + city if city else ''}{timestamp_info}");"""
+            .bindPopup("<b>{ip}</b><br>{country}{', ' + city if city else ''}{timestamp_info}{frequency_info}");"""
         markers.append(marker_html)
 
     markers_html = "\n".join(markers)

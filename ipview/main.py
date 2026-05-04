@@ -5,7 +5,7 @@ import argparse
 import sys
 from typing import List
 
-from .collector import collect_dropped_ips, collect_dropped_ips_with_timestamp, filter_timestamps_by_date
+from .collector import collect_dropped_ips, collect_dropped_ips_with_stats, filter_timestamps_by_date
 from .geo import get_geo_locations, GeoIPLookup
 from .map import create_world_map, create_heatmap, create_interactive_map
 
@@ -62,7 +62,7 @@ def main(args: List[str] = None) -> int:
     ip_timestamps = None
 
     # Collect IPs and get timestamps from file modification time
-    ip_timestamps = collect_dropped_ips_with_timestamp(parsed.input)
+    ip_timestamps, ip_frequencies = collect_dropped_ips_with_stats(parsed.input)
 
     # Filter by date range if specified
     ip_timestamps = filter_timestamps_by_date(
@@ -70,6 +70,10 @@ def main(args: List[str] = None) -> int:
         parsed.start_date,
         parsed.end_date
     )
+    # Also filter frequencies to match
+    if ip_frequencies:
+        ip_frequencies = {ip: count for ip, count in ip_frequencies.items() if ip in ip_timestamps}
+
     ips = set(ip_timestamps.keys())
 
     if not ips:
@@ -79,6 +83,7 @@ def main(args: List[str] = None) -> int:
     if parsed.verbose:
         print(f"Found {len(ips)} unique IP(s) with DROP entries")
         print("Timestamps from file modification times:")
+        print(f"Frequency range: {min(ip_frequencies.values()) if ip_frequencies else 0} - {max(ip_frequencies.values()) if ip_frequencies else 0}")
         for ip, ts in sorted(ip_timestamps.items())[:5]:
             print(f"  {ip}: {ts}")
         if len(ip_timestamps) > 5:
@@ -119,7 +124,7 @@ def main(args: List[str] = None) -> int:
     if parsed.heatmap:
         output_path = create_heatmap(valid_locations, output_path)
     elif parsed.html:
-        output_path = create_interactive_map(valid_locations, output_path, ip_timestamps=ip_timestamps)
+        output_path = create_interactive_map(valid_locations, output_path, ip_timestamps=ip_timestamps, ip_frequencies=ip_frequencies)
     else:
         output_path = create_world_map(valid_locations, output_path)
 

@@ -5,6 +5,7 @@ import re
 import glob as glob_module
 from typing import List, Set, Dict, Tuple
 from datetime import datetime
+from collections import defaultdict
 
 
 def collect_dropped_ips(pattern: str) -> Set[str]:
@@ -32,16 +33,19 @@ def collect_dropped_ips(pattern: str) -> Set[str]:
     return ips
 
 
-def collect_dropped_ips_with_timestamp(pattern: str) -> Dict[str, datetime]:
-    """Collect IPs with timestamps from file modification time.
+def collect_dropped_ips_with_stats(pattern: str) -> Tuple[Dict[str, datetime], Dict[str, int]]:
+    """Collect IPs with timestamps and frequency counts from file modification time.
 
     Args:
         pattern: Glob pattern for log files (e.g., "logdir/*")
 
     Returns:
-        Dict mapping IPs to their file's modification timestamp
+        Tuple of (ip_timestamps, ip_frequencies)
+        - ip_timestamps: Dict mapping IPs to their file's modification timestamp
+        - ip_frequencies: Dict mapping IPs to their occurrence count
     """
     ip_timestamps: Dict[str, datetime] = {}
+    ip_frequencies: Dict[str, int] = defaultdict(int)
 
     for filepath in glob_module.glob(pattern):
         # Skip if not a regular file
@@ -61,13 +65,14 @@ def collect_dropped_ips_with_timestamp(pattern: str) -> Dict[str, datetime]:
                     if 'DROP' in line:
                         ip = extract_ip(line)
                         if ip:
+                            ip_frequencies[ip] += 1
                             # Keep the earliest timestamp for each IP
                             if ip not in ip_timestamps or timestamp < ip_timestamps[ip]:
                                 ip_timestamps[ip] = timestamp
         except IOError:
             continue
 
-    return ip_timestamps
+    return ip_timestamps, dict(ip_frequencies)
 
 
 def filter_timestamps_by_date(
@@ -112,6 +117,31 @@ def filter_timestamps_by_date(
         if end_dt and ts_date > end_dt:
             continue
         result[ip] = ts
+
+    return result
+
+
+def filter_by_frequency(
+    ip_frequencies: Dict[str, int],
+    min_count: int | None = None,
+    max_count: int | None = None
+) -> Dict[str, int]:
+    """Filter IPs by frequency count.
+
+    Args:
+        ip_frequencies: Dict mapping IPs to occurrence counts
+        min_count: Minimum occurrence count (inclusive)
+        max_count: Maximum occurrence count (inclusive)
+
+    Returns:
+        Filtered dict with IPs matching frequency criteria
+    """
+    result = ip_frequencies.copy()
+
+    if min_count is not None:
+        result = {ip: count for ip, count in result.items() if count >= min_count}
+    if max_count is not None:
+        result = {ip: count for ip, count in result.items() if count <= max_count}
 
     return result
 
