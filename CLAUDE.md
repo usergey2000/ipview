@@ -13,20 +13,20 @@ Analyze firewall logs and visualize blocked IP addresses on a world map.
 ## Installation
 
 ```bash
-pip install -e .
+pip3 install -e .
 ```
 
 ## Usage
 
 ```bash
 # Basic usage
-python -m ipview
+python3 -m ipview
 
 # With verbose output
-python -m ipview --verbose
+python3 -m ipview --verbose
 
 # Generate HTML map
-python -m ipview --html -o map.html
+python3 -m ipview --html -o map.html
 ```
 
 ## Project Structure
