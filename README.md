@@ -17,7 +17,11 @@ pip3 install -r requirements.txt
 ## Usage
 
 ```bash
-# Basic usage (scans *.log files, outputs ip_map.png)
+# Basic usage (scans ipt-example.log, outputs ip_map.png)
+python3 -m ipview -i ipt-example.log
+
+# Create a symlink to analyze a log directory
+ln -sfn /path/to/logs logdir
 python3 -m ipview
 
 # Specify input pattern and output file
