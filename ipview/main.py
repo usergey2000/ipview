@@ -84,13 +84,8 @@ def main(args: List[str] = None) -> int:
     if ip_frequencies and parsed.min_freq > 1:
         ip_frequencies = filter_by_frequency(ip_frequencies, min_count=parsed.min_freq)
         ip_timestamps = {ip: ts for ip, ts in ip_timestamps.items() if ip in ip_frequencies}
-        ips = set(ip_timestamps.keys())
-        if parsed.verbose:
-            print(f"Filtered to {len(ips)} IPs with frequency >= {parsed.min_freq}")
 
-    if not ips:
-        print("No IPs with DROP entries found.", file=sys.stderr)
-        return 1
+    ips = set(ip_timestamps.keys()) if ip_timestamps else set()
 
     if not ips:
         print("No IPs with DROP entries found.", file=sys.stderr)

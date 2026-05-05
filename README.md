@@ -20,6 +20,9 @@ pip3 install -r requirements.txt
 # Basic usage (scans ipt-example.log, outputs ip_map.png)
 python3 -m ipview -i ipt-example.log
 
+# Generate an interactive HTML map from ipt-example.log
+python3 -m ipview -i ipt-example.log --html -o ip_map.html
+
 # Create a symlink to analyze a log directory
 ln -sfn /path/to/logs logdir
 python3 -m ipview

@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blocked IP Locations</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+          integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+          crossorigin=""/>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+        #map {
+            height: 100vh;
+            width: 100%;
+        }
+        .leaflet-popup-content {
+            margin: 0;
+            line-height: 1.5;
+        }
+        .leaflet-popup-content-wrapper {
+            background-color: #fff;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div id="map"></div>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+            integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+            crossorigin=""></script>
+    <script>
+        // Initialize map centered on the IP locations
+        var map = L.map('map').setView([33.01177, 40.23236], 2);
+
+        // Add OpenStreetMap tiles
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+            maxZoom: 18,
+            noWrap: false
+        }).addTo(map);
+
+        // Add markers for each IP location
+        L.marker([30.6667, 104.0667])
+            .addTo(map)
+            .bindPopup("<b>125.67.125.170</b><br>China, Chengdu<br><b>Timestamp:</b> 2026-05-05 14:35:19<br><b>Count:</b> 1 occurrence");
+        L.marker([35.685, 139.7514])
+            .addTo(map)
+            .bindPopup("<b>43.134.181.196</b><br>Japan, Tokyo<br><b>Timestamp:</b> 2026-05-05 14:35:19<br><b>Count:</b> 1 occurrence");
+        L.marker([41.0214, 28.9948])
+            .addTo(map)
+            .bindPopup("<b>89.252.140.21</b><br>Turkey<br><b>Timestamp:</b> 2026-05-05 14:35:19<br><b>Count:</b> 1 occurrence");
+        L.marker([37.751, -97.822])
+            .addTo(map)
+            .bindPopup("<b>154.26.192.39</b><br>United States<br><b>Timestamp:</b> 2026-05-05 14:35:19<br><b>Count:</b> 1 occurrence");
+        L.marker([31.8667, -116.6167])
+            .addTo(map)
+            .bindPopup("<b>189.222.152.51</b><br>Mexico, Ensenada<br><b>Timestamp:</b> 2026-05-05 14:35:19<br><b>Count:</b> 1 occurrence");
+        L.marker([55.154, 61.4291])
+            .addTo(map)
+            .bindPopup("<b>94.50.19.234</b><br>Russia, Chelyabinsk<br><b>Timestamp:</b> 2026-05-05 14:35:19<br><b>Count:</b> 1 occurrence");
+        L.marker([39.9289, 116.3883])
+            .addTo(map)
+            .bindPopup("<b>101.32.141.19</b><br>China, Beijing<br><b>Timestamp:</b> 2026-05-05 14:35:19<br><b>Count:</b> 1 occurrence");
+        L.marker([4.6357, -74.0733])
+            .addTo(map)
+            .bindPopup("<b>190.145.17.26</b><br>Colombia, Bogotá<br><b>Timestamp:</b> 2026-05-05 14:35:19<br><b>Count:</b> 1 occurrence");
+        L.marker([23.1167, 113.25])
+            .addTo(map)
+            .bindPopup("<b>14.29.180.161</b><br>China, Guangzhou<br><b>Timestamp:</b> 2026-05-05 14:35:19<br><b>Count:</b> 1 occurrence");
+        L.marker([29.9521, -95.4484])
+            .addTo(map)
+            .bindPopup("<b>104.250.50.140</b><br>United States, Houston<br><b>Timestamp:</b> 2026-05-05 14:35:19<br><b>Count:</b> 1 occurrence");
+        L.marker([38.6989, 116.0936])
+            .addTo(map)
+            .bindPopup("<b>175.27.239.13</b><br>China, Renqiu<br><b>Timestamp:</b> 2026-05-05 14:35:19<br><b>Count:</b> 1 occurrence");
+        L.marker([13.7667, 109.2333])
+            .addTo(map)
+            .bindPopup("<b>103.237.144.204</b><br>Vietnam<br><b>Timestamp:</b> 2026-05-05 14:35:19<br><b>Count:</b> 1 occurrence");
+        L.marker([32.0617, 118.7778])
+            .addTo(map)
+            .bindPopup("<b>218.92.0.53</b><br>China, Nanjing<br><b>Timestamp:</b> 2026-05-05 14:35:19<br><b>Count:</b> 1 occurrence");
+        L.marker([17.25, 80.15])
+            .addTo(map)
+            .bindPopup("<b>45.117.64.242</b><br>India, Khammam<br><b>Timestamp:</b> 2026-05-05 14:35:19<br><b>Count:</b> 1 occurrence");
+        L.marker([41.4619, -87.0008])
+            .addTo(map)
+            .bindPopup("<b>152.228.164.249</b><br>United States, Valparaiso<br><b>Timestamp:</b> 2026-05-05 14:35:19<br><b>Count:</b> 1 occurrence");
+        L.marker([51.2993, 9.491])
+            .addTo(map)
+            .bindPopup("<b>148.251.102.94</b><br>Germany<br><b>Timestamp:</b> 2026-05-05 14:35:19<br><b>Count:</b> 1 occurrence");
+        L.marker([34.7725, 113.7266])
+            .addTo(map)
+            .bindPopup("<b>36.133.34.191</b><br>China<br><b>Timestamp:</b> 2026-05-05 14:35:19<br><b>Count:</b> 1 occurrence");
+        L.marker([30.1438, -81.5401])
+            .addTo(map)
+            .bindPopup("<b>64.225.54.60</b><br>United States, Jacksonville<br><b>Timestamp:</b> 2026-05-05 14:35:19<br><b>Count:</b> 1 occurrence");
+        L.marker([38.9248, -94.6379])
+            .addTo(map)
+            .bindPopup("<b>143.244.144.227</b><br>United States, Leawood<br><b>Timestamp:</b> 2026-05-05 14:35:19<br><b>Count:</b> 1 occurrence");
+        L.marker([-7.8167, 112.0167])
+            .addTo(map)
+            .bindPopup("<b>36.84.99.87</b><br>Indonesia, Kediri<br><b>Timestamp:</b> 2026-05-05 14:35:19<br><b>Count:</b> 1 occurrence");
+        L.marker([42.5051, -71.2047])
+            .addTo(map)
+            .bindPopup("<b>69.49.247.238</b><br>United States, Burlington<br><b>Timestamp:</b> 2026-05-05 14:35:19<br><b>Count:</b> 1 occurrence");
+        L.marker([35.6961, 51.4231])
+            .addTo(map)
+            .bindPopup("<b>79.175.128.161</b><br>Iran<br><b>Timestamp:</b> 2026-05-05 14:35:19<br><b>Count:</b> 1 occurrence");
+        L.marker([22.8167, 108.3167])
+            .addTo(map)
+            .bindPopup("<b>118.195.182.56</b><br>China, Nanning<br><b>Timestamp:</b> 2026-05-05 14:35:19<br><b>Count:</b> 1 occurrence");
+        L.marker([23.1167, 113.25])
+            .addTo(map)
+            .bindPopup("<b>183.56.226.5</b><br>China, Guangzhou<br><b>Timestamp:</b> 2026-05-05 14:35:19<br><b>Count:</b> 1 occurrence");
+        L.marker([47.9167, 106.9167])
+            .addTo(map)
+            .bindPopup("<b>122.254.94.129</b><br>Mongolia, Ulan Bator<br><b>Timestamp:</b> 2026-05-05 14:35:19<br><b>Count:</b> 1 occurrence");
+        L.marker([31.0456, 121.3997])
+            .addTo(map)
+            .bindPopup("<b>101.89.157.34</b><br>China, Shanghai<br><b>Timestamp:</b> 2026-05-05 14:35:19<br><b>Count:</b> 1 occurrence");
+        L.marker([37.419200000000004, -122.0574])
+            .addTo(map)
+            .bindPopup("<b>35.237.94.18</b><br>United States, Mountain View<br><b>Timestamp:</b> 2026-05-05 14:35:19<br><b>Count:</b> 1 occurrence");
+        L.marker([22.25, 114.1667])
+            .addTo(map)
+            .bindPopup("<b>103.195.4.121</b><br>Hong Kong<br><b>Timestamp:</b> 2026-05-05 14:35:19<br><b>Count:</b> 1 occurrence");
+        L.marker([39.9289, 116.3883])
+            .addTo(map)
+            .bindPopup("<b>49.235.237.222</b><br>China, Beijing<br><b>Timestamp:</b> 2026-05-05 14:35:19<br><b>Count:</b> 1 occurrence");
+        L.marker([32.0617, 118.7778])
+            .addTo(map)
+            .bindPopup("<b>58.210.46.186</b><br>China, Nanjing<br><b>Timestamp:</b> 2026-05-05 14:35:19<br><b>Count:</b> 1 occurrence");
+        L.marker([48.8628, 2.3292])
+            .addTo(map)
+            .bindPopup("<b>140.86.39.162</b><br>France, Paris<br><b>Timestamp:</b> 2026-05-05 14:35:19<br><b>Count:</b> 1 occurrence");
+        L.marker([38.9563, -94.5838])
+            .addTo(map)
+            .bindPopup("<b>147.182.247.10</b><br>United States, Kansas City<br><b>Timestamp:</b> 2026-05-05 14:35:19<br><b>Count:</b> 1 occurrence");
+        L.marker([35.685, 139.7514])
+            .addTo(map)
+            .bindPopup("<b>43.153.56.90</b><br>Japan, Tokyo<br><b>Timestamp:</b> 2026-05-05 14:35:19<br><b>Count:</b> 1 occurrence");
+        L.marker([31.0456, 121.3997])
+            .addTo(map)
+            .bindPopup("<b>101.227.53.119</b><br>China, Shanghai<br><b>Timestamp:</b> 2026-05-05 14:35:19<br><b>Count:</b> 1 occurrence");
+        L.marker([50.1153, 8.6823])
+            .addTo(map)
+            .bindPopup("<b>165.227.172.206</b><br>Germany, Frankfurt am Main<br><b>Timestamp:</b> 2026-05-05 14:35:19<br><b>Count:</b> 1 occurrence");
+        L.marker([20.0, 77.0])
+            .addTo(map)
+            .bindPopup("<b>103.231.40.36</b><br>India<br><b>Timestamp:</b> 2026-05-05 14:35:19<br><b>Count:</b> 1 occurrence");
+        L.marker([37.5985, 126.9783])
+            .addTo(map)
+            .bindPopup("<b>121.136.155.165</b><br>Republic of Korea, Seoul<br><b>Timestamp:</b> 2026-05-05 14:35:19<br><b>Count:</b> 1 occurrence");
+        L.marker([55.7522, 37.6156])
+            .addTo(map)
+            .bindPopup("<b>79.137.198.143</b><br>Russia, Moscow<br><b>Timestamp:</b> 2026-05-05 14:35:19<br><b>Count:</b> 1 occurrence");
+        L.marker([51.5142, -0.0931])
+            .addTo(map)
+            .bindPopup("<b>159.65.91.105</b><br>United Kingdom, London<br><b>Timestamp:</b> 2026-05-05 14:35:19<br><b>Count:</b> 1 occurrence");
+        L.marker([55.7386, 37.6068])
+            .addTo(map)
+            .bindPopup("<b>195.133.146.254</b><br>Russia<br><b>Timestamp:</b> 2026-05-05 14:35:19<br><b>Count:</b> 1 occurrence");
+        L.marker([35.685, 139.7514])
+            .addTo(map)
+            .bindPopup("<b>43.130.42.91</b><br>Japan, Tokyo<br><b>Timestamp:</b> 2026-05-05 14:35:19<br><b>Count:</b> 1 occurrence");
+        L.marker([26.5833, 106.7167])
+            .addTo(map)
+            .bindPopup("<b>222.87.218.26</b><br>China, Guiyang<br><b>Timestamp:</b> 2026-05-05 14:35:19<br><b>Count:</b> 1 occurrence");
+        L.marker([39.9289, 116.3883])
+            .addTo(map)
+            .bindPopup("<b>124.222.187.59</b><br>China, Beijing<br><b>Timestamp:</b> 2026-05-05 14:35:19<br><b>Count:</b> 1 occurrence");
+        L.marker([31.8667, -116.6167])
+            .addTo(map)
+            .bindPopup("<b>189.222.198.178</b><br>Mexico, Ensenada<br><b>Timestamp:</b> 2026-05-05 14:35:19<br><b>Count:</b> 1 occurrence");
+        L.marker([39.732, -104.9839])
+            .addTo(map)
+            .bindPopup("<b>164.92.106.15</b><br>United States, Denver<br><b>Timestamp:</b> 2026-05-05 14:35:19<br><b>Count:</b> 1 occurrence");
+        L.marker([33.6119, -111.8906])
+            .addTo(map)
+            .bindPopup("<b>68.178.174.221</b><br>United States, Scottsdale<br><b>Timestamp:</b> 2026-05-05 14:35:19<br><b>Count:</b> 1 occurrence");
+        L.marker([39.9289, 116.3883])
+            .addTo(map)
+            .bindPopup("<b>124.222.74.204</b><br>China, Beijing<br><b>Timestamp:</b> 2026-05-05 14:35:19<br><b>Count:</b> 1 occurrence");
+        L.marker([32.0617, 118.7778])
+            .addTo(map)
+            .bindPopup("<b>218.92.0.55</b><br>China, Nanjing<br><b>Timestamp:</b> 2026-05-05 14:35:19<br><b>Count:</b> 1 occurrence");
+        L.marker([44.9333, -78.7333])
+            .addTo(map)
+            .bindPopup("<b>165.154.42.45</b><br>Canada, Minden<br><b>Timestamp:</b> 2026-05-05 14:35:19<br><b>Count:</b> 1 occurrence");
+        L.marker([-7.1539, 112.6561])
+            .addTo(map)
+            .bindPopup("<b>125.164.5.108</b><br>Indonesia, Gresik<br><b>Timestamp:</b> 2026-05-05 14:35:19<br><b>Count:</b> 1 occurrence");
+        L.marker([32.7787, -96.8217])
+            .addTo(map)
+            .bindPopup("<b>45.33.6.210</b><br>United States, Dallas<br><b>Timestamp:</b> 2026-05-05 14:35:19<br><b>Count:</b> 1 occurrence");
+        L.marker([24.0, 54.0])
+            .addTo(map)
+            .bindPopup("<b>83.111.121.102</b><br>United Arab Emirates<br><b>Timestamp:</b> 2026-05-05 14:35:19<br><b>Count:</b> 1 occurrence");
+        L.marker([43.6555, -79.3626])
+            .addTo(map)
+            .bindPopup("<b>159.203.23.80</b><br>Canada, Toronto<br><b>Timestamp:</b> 2026-05-05 14:35:19<br><b>Count:</b> 1 occurrence");
+        L.marker([37.5985, 126.9783])
+            .addTo(map)
+            .bindPopup("<b>112.217.207.26</b><br>Republic of Korea, Seoul<br><b>Timestamp:</b> 2026-05-05 14:35:19<br><b>Count:</b> 1 occurrence");
+        L.marker([35.685, 139.7514])
+            .addTo(map)
+            .bindPopup("<b>43.130.26.150</b><br>Japan, Tokyo<br><b>Timestamp:</b> 2026-05-05 14:35:19<br><b>Count:</b> 1 occurrence");
+        L.marker([42.7, 23.3333])
+            .addTo(map)
+            .bindPopup("<b>92.247.69.54</b><br>Bulgaria<br><b>Timestamp:</b> 2026-05-05 14:35:19<br><b>Count:</b> 1 occurrence");
+        L.marker([29.9668, -95.3454])
+            .addTo(map)
+            .bindPopup("<b>34.92.81.41</b><br>United States, Houston<br><b>Timestamp:</b> 2026-05-05 14:35:19<br><b>Count:</b> 1 occurrence");
+        L.marker([35.685, 139.7514])
+            .addTo(map)
+            .bindPopup("<b>43.134.227.87</b><br>Japan, Tokyo<br><b>Timestamp:</b> 2026-05-05 14:35:19<br><b>Count:</b> 1 occurrence");
+        L.marker([44.9741, -93.2565])
+            .addTo(map)
+            .bindPopup("<b>144.34.171.163</b><br>United States, Minneapolis<br><b>Timestamp:</b> 2026-05-05 14:35:19<br><b>Count:</b> 1 occurrence");
+        L.marker([39.9289, 116.3883])
+            .addTo(map)
+            .bindPopup("<b>106.55.197.62</b><br>China, Beijing<br><b>Timestamp:</b> 2026-05-05 14:35:19<br><b>Count:</b> 1 occurrence");
+        L.marker([42.1973, -87.9241])
+            .addTo(map)
+            .bindPopup("<b>170.64.183.168</b><br>United States, Lincolnshire<br><b>Timestamp:</b> 2026-05-05 14:35:19<br><b>Count:</b> 1 occurrence");
+        L.marker([-30.95, -58.8])
+            .addTo(map)
+            .bindPopup("<b>186.96.139.154</b><br>Argentina, Federal<br><b>Timestamp:</b> 2026-05-05 14:35:19<br><b>Count:</b> 1 occurrence");
+        L.marker([-23.7, -46.55])
+            .addTo(map)
+            .bindPopup("<b>200.148.153.172</b><br>Brazil, São Bernardo do Campo<br><b>Timestamp:</b> 2026-05-05 14:35:19<br><b>Count:</b> 1 occurrence");
+        L.marker([37.3514, 127.9453])
+            .addTo(map)
+            .bindPopup("<b>175.206.113.91</b><br>Republic of Korea, Wonju<br><b>Timestamp:</b> 2026-05-05 14:35:19<br><b>Count:</b> 1 occurrence");
+        L.marker([12.9833, 77.5833])
+            .addTo(map)
+            .bindPopup("<b>202.83.16.8</b><br>India, Bengaluru<br><b>Timestamp:</b> 2026-05-05 14:35:19<br><b>Count:</b> 1 occurrence");
+        L.marker([39.9289, 116.3883])
+            .addTo(map)
+            .bindPopup("<b>124.223.219.167</b><br>China, Beijing<br><b>Timestamp:</b> 2026-05-05 14:35:19<br><b>Count:</b> 1 occurrence");
+        L.marker([40.7584, -73.9794])
+            .addTo(map)
+            .bindPopup("<b>167.71.56.110</b><br>United States, New York<br><b>Timestamp:</b> 2026-05-05 14:35:19<br><b>Count:</b> 1 occurrence");
+        L.marker([47.4925, 19.0514])
+            .addTo(map)
+            .bindPopup("<b>84.2.226.70</b><br>Hungary<br><b>Timestamp:</b> 2026-05-05 14:35:19<br><b>Count:</b> 1 occurrence");
+        L.marker([39.9289, 116.3883])
+            .addTo(map)
+            .bindPopup("<b>101.126.70.9</b><br>China, Beijing<br><b>Timestamp:</b> 2026-05-05 14:35:19<br><b>Count:</b> 1 occurrence");
+        L.marker([44.2233, 42.0578])
+            .addTo(map)
+            .bindPopup("<b>85.172.189.189</b><br>Russia, Cherkessk<br><b>Timestamp:</b> 2026-05-05 14:35:19<br><b>Count:</b> 1 occurrence");
+        L.marker([56.6667, 16.3667])
+            .addTo(map)
+            .bindPopup("<b>81.231.96.145</b><br>Sweden, Kalmar<br><b>Timestamp:</b> 2026-05-05 14:35:19<br><b>Count:</b> 1 occurrence");
+        L.marker([12.9833, 77.5833])
+            .addTo(map)
+            .bindPopup("<b>139.59.25.164</b><br>India, Bengaluru<br><b>Timestamp:</b> 2026-05-05 14:35:19<br><b>Count:</b> 1 occurrence");
+        L.marker([52.3556, 4.9135])
+            .addTo(map)
+            .bindPopup("<b>131.153.22.240</b><br>Netherlands, Amsterdam<br><b>Timestamp:</b> 2026-05-05 14:35:19<br><b>Count:</b> 1 occurrence");
+        L.marker([22.25, 114.1667])
+            .addTo(map)
+            .bindPopup("<b>39.109.116.167</b><br>Hong Kong<br><b>Timestamp:</b> 2026-05-05 14:35:19<br><b>Count:</b> 1 occurrence");
+        L.marker([4.3365, -74.3638])
+            .addTo(map)
+            .bindPopup("<b>190.147.213.31</b><br>Colombia, Fusagasuga<br><b>Timestamp:</b> 2026-05-05 14:35:19<br><b>Count:</b> 1 occurrence");
+        L.marker([35.685, 139.7514])
+            .addTo(map)
+            .bindPopup("<b>43.156.0.112</b><br>Japan, Tokyo<br><b>Timestamp:</b> 2026-05-05 14:35:19<br><b>Count:</b> 1 occurrence");
+        L.marker([34.2583, 108.9286])
+            .addTo(map)
+            .bindPopup("<b>36.46.159.244</b><br>China, Xi'an<br><b>Timestamp:</b> 2026-05-05 14:35:19<br><b>Count:</b> 1 occurrence");
+        L.marker([32.0617, 118.7778])
+            .addTo(map)
+            .bindPopup("<b>221.226.2.122</b><br>China, Nanjing<br><b>Timestamp:</b> 2026-05-05 14:35:19<br><b>Count:</b> 1 occurrence");
+        L.marker([39.9289, 116.3883])
+            .addTo(map)
+            .bindPopup("<b>1.117.182.101</b><br>China, Beijing<br><b>Timestamp:</b> 2026-05-05 14:35:19<br><b>Count:</b> 1 occurrence");
+        L.marker([35.685, 139.7514])
+            .addTo(map)
+            .bindPopup("<b>43.139.247.180</b><br>Japan, Tokyo<br><b>Timestamp:</b> 2026-05-05 14:35:19<br><b>Count:</b> 1 occurrence");
+    </script>
+</body>
+</html>
