@@ -38,7 +38,14 @@ python3 -m ipview -i "logdir/*" --heatmap -o heatmap.png
 
 # Verbose mode
 python3 -m ipview -i "logdir/*" -v
+
+# Filter by minimum IP appearance frequency (default: 100)
+python3 -m ipview -i "logdir/*" --min-freq 10
 ```
+
+## IP Frequency Threshold
+
+The `--min-freq` option filters IPs by their appearance frequency in log files. Only IPs appearing at least `min-freq` times will be included in the map. This helps focus on recurring threats rather than one-off attempts.
 
 ## Timestamps
 
